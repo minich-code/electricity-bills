@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "electricity_bills"
+version = "0.0.1"
+description = "This is a project to predict electricity bills for different households"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    { name = "Western", email = "minichworks@gmail.com"},
+    { name = "Amase", email = "oyakapeliamase@gmail.com"}
+]
+keywords = ["electricity price", "machine-learning", "prediction price"]
+
+# Dependencies should be here under [project], not as a separate section
+dependencies = [
+    "ensure",
+    "flask",
+    "Flask-Cors",
+    "joblib",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pymongo",
+    "pyYAML",
+    "scikit-learn",
+    "seaborn",
+    "streamlit",
+    "types-PyYAML",
+    "python-box",
+    "ydata-profiling",
+    "pydantic",
+    "pydantic-settings",
+    "dvc",
+    "wandb",
+    "apache-airflow",
+    "python-dotenv",
+    "apache-airflow-providers-mongo",
+    "fastapi"
+]
+
+[project.optional-dependencies]
+dev = [
+    "flake8",
+    "pytest",
+]
+
+[project.scripts]
+electricity_bills = "electricity_bills.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.mypy]
+plugins = [
+    "pydantic.mypy",
+    "pydantic.v1.mypy",
+]

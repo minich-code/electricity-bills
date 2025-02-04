@@ -3,8 +3,7 @@ import os
 from pathlib import Path
 
 # Define the package name 
-package_name = "lead_scoring"
-
+package_name = "ElectricityBill"
 # List the files to be created 
 list_of_files = [
     Path(".github") / "workflows" / ".gitkeep", # github workflow directory

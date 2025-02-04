@@ -1,0 +1,14 @@
+# Data Ingestion Configuration 
+
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  database_name: energy_consumption
+  collection_name: electricity_bills
+  batch_size: 10000
+  get_user_name: John Doe
+
+
+
+
