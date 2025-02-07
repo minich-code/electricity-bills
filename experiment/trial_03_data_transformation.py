@@ -27,8 +27,8 @@ from src.ElectricityBill.constants import *
 class DataTransformationConfig:
     root_dir: Path
     data_path: Path
-    random_state: int
-    target_col: str
+    random_state: frozenset
+    target_col: frozenset
     numerical_cols: List[str]
     categorical_cols:List[str]
     
