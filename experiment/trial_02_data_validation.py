@@ -15,10 +15,10 @@ import sys
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 from pathlib import Path
-from src.lead_scoring.logger import logger
-from src.lead_scoring.constants import *
-from src.lead_scoring.utils.commons import *
-from src.lead_scoring.exception  import CustomException
+from src.ElectricityBill.logger import logger
+from src.ElectricityBill.constants import *
+from src.ElectricityBill.utils.commons import *
+from src.ElectricityBill.exception  import CustomException
 from ydata_profiling import ProfileReport  # Updated import
 
 @dataclass
