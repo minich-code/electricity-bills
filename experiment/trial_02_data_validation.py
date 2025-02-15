@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/western/DS_Projects/electricity-bills')
 
 
 from abc import ABC, abstractmethod
@@ -19,7 +21,7 @@ from src.ElectricityBill.logger import logger
 from src.ElectricityBill.constants import *
 from src.ElectricityBill.utils.commons import *
 from src.ElectricityBill.exception  import CustomException
-from ydata_profiling import ProfileReport  # Updated import
+from ydata_profiling import ProfileReport  
 
 @dataclass
 class ValidationResult:

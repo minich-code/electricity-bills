@@ -1,0 +1,154 @@
+
+
+columns:
+  - name: 'Fan'
+    type: 'integer'
+    constraints:
+      - type: 'range'
+        min: 0.0
+        max: 30.0
+          
+  - name: 'Refrigerator'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 10.0
+        max: 30.0
+          
+
+  - name: 'AirConditioner'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 0.0
+        max: 7.0
+           
+
+  - name: 'Television'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 0.0
+        max: 30.0
+      
+           
+  - name: 'Month'
+    type: 'integer'
+    constraints:
+      - type: 'range'
+        min: 1
+        max: 12
+          
+
+  - name: 'MonthlyHours'
+    type: 'integer'
+    constraints:
+      - type: 'range'
+        min: 100
+        max: 1000
+          
+  - name: 'TariffRate'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 5.40
+        max: 10.30             
+                       
+
+  - name: 'TotalApplianceHours'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 20.0
+        max: 90.0
+
+
+  - name: 'City'
+    type: 'string'
+    constraints:
+      - type: 'enum'
+        values:
+          - 'Hyderabad'                                               
+          - 'Vadodara'                 
+          - 'Shimla'                                    
+          - 'Mumbai'                           
+          - 'Ratnagiri'                                     
+          - 'New Delhi'                                    
+          - 'Dahej'                           
+          - 'Ahmedabad'                                                  
+          - 'Noida'                                       
+          - 'Nagpur'                          
+          - 'Chennai'                               
+          - 'Faridabad'                             
+          - 'Kolkata '                                    
+          - 'Pune'      
+          - 'Gurgaon'                  
+          - 'Navi Mumbai'                                        
+          
+
+  - name: 'Company'
+    type: 'string'
+    constraints:
+      - type: 'enum'
+        values:
+          - 'Tata Power Company Ltd.'                         
+          - 'NHPC'                  
+          - 'Jyoti Structure'    
+          - 'Power Grid Corp'               
+          - 'Ratnagiri Gas and Power Pvt. Ltd. (RGPPL)'              
+          - 'Adani Power Ltd.'
+          - 'Kalpataru Power'
+          - 'Orient Green'
+          - 'Sterlite Power Transmission Ltd'
+          - 'Neueon Towers / Sujana Towers Ltd.'
+          - 'KEC International'
+          - 'Indowind Energy'
+          - 'Unitech Power Transmission Ltd.'
+          - 'Bonfiglioli Transmission Pvt. Ltd'
+          - 'SJVN Ltd.'
+          - 'Maha Transco â€“ Maharashtra State Electricity Transmission Co, Ltd.'
+          - 'L&T Transmission & Distribution'
+          - 'Guj Ind Power'
+          - 'Torrent Power Ltd.'
+          - 'Reliance Energy'
+          - 'GE T&D India Limited'
+          - 'NTPC Pvt. Ltd.'
+          - 'KEC International'
+          - 'Optibelt Power Transmission India Private Limited'
+          - 'CESC'
+          - 'Ringfeder Power Transmission India Pvt. Ltd.'
+          - 'JSW Energy Ltd.'
+          - 'Sunil Hitech Eng'
+          - 'Toshiba Transmission & Distribution Systems (India) Pvt.'
+          - 'Kalpataru Power'
+          - 'Jaiprakash Power'
+          - 'Bonfiglioli Transmission Pvt. Ltd.'
+          - 'Optibelt Power Transmission India Private Limited'
+          - 'TransRail Lighting'
+          
+  - name: 'season'
+    type: 'string'
+    constraints:
+      - type: 'enum'
+        values:
+        - 'Winter'
+        - 'Summer'
+        - 'Monsoon'
+
+  - name: 'UsageCategory'
+    type: 'string'
+    constraints:
+      - type: 'enum'
+        values:
+        - 'High'
+        - 'Medium'
+        - 'Low'
+
+target_column:
+  - name: 'ElectricityBill'
+    type: 'float'
+    constraints:
+      - type: 'range'
+        min: 500.0
+        max: 15000.0
+

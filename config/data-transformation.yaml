@@ -9,5 +9,4 @@ data_transformation:
   numerical_cols:
   
 
-  categorical_cols:
-    - 
+  categorical_cols:    - 

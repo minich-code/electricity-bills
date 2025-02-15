@@ -1,0 +1,25 @@
+artifacts_root: artifacts
+
+data_validation:
+  root_dir: artifacts/data_validation
+  data_dir: artifacts/data_ingestion/electricity_data.parquet
+  val_status: artifacts/data_validation/validation_status.json
+  critical_columns:
+    - 'Fan'
+    - 'Refrigerator'
+    - 'AirConditioner'
+    - 'Television'
+    - 'Month'
+    - 'MonthlyHours'
+    - 'TariffRate'
+    - 'ElectricityBill'
+    - 'TotalApplianceHours'
+    - 'City'
+    - 'Company'
+    - 'season'
+    - 'UsageCategory'
+
+
+
+
+
