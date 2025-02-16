@@ -1,0 +1,7 @@
+
+
+artifacts_root: artifacts
+
+prediction_pipeline:
+  model_path: artifacts/model_trainer/electricity_model.joblib
+  data_preprocessor: artifacts/data_transformation/preprocessor.joblib

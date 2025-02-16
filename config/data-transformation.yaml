@@ -5,8 +5,21 @@ data_transformation:
   root_dir: artifacts/data_transformation
   data_path: artifacts/data_validation/validated_data.parquet
   random_state: 42
-  target_col: 'converted'
+  target_col: 'ElectricityBill'
   numerical_cols:
-  
+    - 'Fan'
+    - 'Refrigerator'
+    - 'AirConditioner'
+    - 'Television'
+    - 'Month'
+    - 'MonthlyHours'
+    - 'TariffRate'
+    - 'TotalApplianceHours'
+  categorical_cols:
+    - 'City'
+    - 'Company'
+    - 'season'
+    - 'UsageCategory'
 
-  categorical_cols:    - 
+  
+  

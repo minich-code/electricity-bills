@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Bill Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+            color: #555;
+        }
+        input, select {
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #449d44;
+        }
+        .error-message {
+            color: #d9534f;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Electricity Bill Prediction</h1>
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+        <form method="post" action="/predict">
+            <label for="Fan">Fan:</label>
+            <input type="number" id="Fan" name="Fan" step="any" required>
+
+            <label for="Refrigerator">Refrigerator:</label>
+            <input type="number" id="Refrigerator" name="Refrigerator" step="any" required>
+
+            <label for="AirConditioner">Air Conditioner:</label>
+            <input type="number" id="AirConditioner" name="AirConditioner" step="any" required>
+
+            <label for="Television">Television:</label>
+            <input type="number" id="Television" name="Television" step="any" required>
+
+            <label for="Month">Month:</label>
+            <select id="Month" name="Month" required>
+                <option value="January">January</option>
+                <option value="February">February</option>
+                <option value="March">March</option>
+                <option value="April">April</option>
+                <option value="May">May</option>
+                <option value="June">June</option>
+                <option value="July">July</option>
+                <option value="August">August</option>
+                <option value="September">September</option>
+                <option value="October">October</option>
+                <option value="November">November</option>
+                <option value="December">December</option>
+            </select>
+
+            <label for="MonthlyHours">Monthly Hours:</label>
+            <input type="number" id="MonthlyHours" name="MonthlyHours" step="any" required>
+
+            <label for="TariffRate">Tariff Rate:</label>
+            <input type="number" id="TariffRate" name="TariffRate" step="any" required>
+
+            <label for="TotalApplianceHours">Total Appliance Hours:</label>
+            <input type="number" id="TotalApplianceHours" name="TotalApplianceHours" step="any" required>
+
+            <label for="City">City:</label>
+            <input type="text" id="City" name="City" required>
+
+            <label for="Company">Company:</label>
+            <input type="text" id="Company" name="Company" required>
+
+            <label for="season">Season:</label>
+            <select id="season" name="season" required>
+                <option value="Spring">Spring</option>
+                <option value="Summer">Summer</option>
+                <option value="Autumn">Autumn</option>
+                <option value="Winter">Winter</option>
+            </select>
+
+            <label for="UsageCategory">Usage Category:</label>
+            <input type="text" id="UsageCategory" name="UsageCategory" required>
+
+            <input type="submit" value="Predict">
+        </form>
+    </div>
+</body>
+</html>

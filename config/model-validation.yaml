@@ -1,0 +1,13 @@
+
+
+
+artifacts_root: artifacts 
+
+model_validation:
+  root_dir: artifacts/model_validation
+  val_features_path: artifacts/data_transformation/X_val_transformed.joblib
+  val_targets_path: artifacts/data_transformation/y_val.parquet
+  model_path: artifacts/model_trainer/electricity_model.joblib
+  project_name: power-meter
+  random_state: 42
+

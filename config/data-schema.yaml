@@ -1,5 +1,4 @@
 
-
 columns:
   - name: 'Fan'
     type: 'integer'
@@ -15,7 +14,6 @@ columns:
         min: 10.0
         max: 30.0
           
-
   - name: 'AirConditioner'
     type: 'float'
     constraints:
@@ -23,15 +21,13 @@ columns:
         min: 0.0
         max: 7.0
            
-
   - name: 'Television'
     type: 'float'
     constraints:
       - type: 'range'
         min: 0.0
         max: 30.0
-      
-           
+                
   - name: 'Month'
     type: 'integer'
     constraints:
@@ -39,7 +35,6 @@ columns:
         min: 1
         max: 12
           
-
   - name: 'MonthlyHours'
     type: 'integer'
     constraints:
@@ -54,14 +49,12 @@ columns:
         min: 5.40
         max: 10.30             
                        
-
   - name: 'TotalApplianceHours'
     type: 'float'
     constraints:
       - type: 'range'
         min: 20.0
         max: 90.0
-
 
   - name: 'City'
     type: 'string'
@@ -85,7 +78,6 @@ columns:
           - 'Gurgaon'                  
           - 'Navi Mumbai'                                        
           
-
   - name: 'Company'
     type: 'string'
     constraints:
@@ -125,7 +117,7 @@ columns:
           - 'Bonfiglioli Transmission Pvt. Ltd.'
           - 'Optibelt Power Transmission India Private Limited'
           - 'TransRail Lighting'
-          
+        
   - name: 'season'
     type: 'string'
     constraints:
