@@ -1,21 +1,34 @@
-from dataclasses import dataclass
+
+
+from dataclasses import dataclass 
 from pathlib import Path
-from typing import Dict, Any, Tuple
-
-# Data Ingestuion config 
+from typing import Dict, List, Any
 
 
 
-
-# Model trainer 
+# Data ingestion configuration
 @dataclass
-class ModelTrainerConfig:
+class DataIngestionConfig:
+    config_data: dict
+
+
+# Data validation 
+@dataclass
+class DataValidationConfig:
     root_dir: Path
-    train_features_path: Path
-    train_targets_path: Path
-    model_name: str
-    model_params: Dict[str, Any]
-    project_name: str
-    val_features_path: Path
-    val_targets_path: Path
+    val_status: str
+    data_dir: Path
+    all_schema: Dict[str, Any]
+    critical_columns: List[str]
+    profile_report_path: str  # Add path for the profile report
+
+# Data Transformation
+@dataclass
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    random_state: frozenset
+    target_col: frozenset
+    numerical_cols: List[str]
+    categorical_cols: List[str]
 

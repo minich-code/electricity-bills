@@ -65,7 +65,9 @@ class ConfigurationManager:
     def __init__(
               self,
               data_validation_config: Path = DATA_VALIDATION_CONFIG_FILEPATH,
-              schema_config: Path = SCHEMA_CONFIG_FILEPATH) -> None:
+              schema_config: Path = SCHEMA_CONFIG_FILEPATH
+              
+              ) -> None:
         
         logger.info(f"Initializing the configuration manager") 
 

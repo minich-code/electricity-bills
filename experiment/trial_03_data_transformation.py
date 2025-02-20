@@ -34,8 +34,7 @@ class DataTransformationConfig:
 class ConfigurationManager:
     def __init__(self, data_preprocessing_config: str = DATA_TRANSFORMATION_CONFIG_FILEPATH):
         self.preprocessing_config = read_yaml(data_preprocessing_config)
-        artifacts_root = self.preprocessing_config.artifacts_root
-        create_directories([artifacts_root])
+        create_directories([self.preprocessing_config.artifacts_root])
 
     def get_data_transformation_config(self) -> DataTransformationConfig:
         logger.info("Getting data transformation configuration")
