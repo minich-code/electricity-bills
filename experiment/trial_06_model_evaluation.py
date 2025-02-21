@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/western/DS_Projects/electricity-bills')
+sys.path.append('/home/western/ds_projects/electricity-bills')
 
 from pathlib import Path
 from dataclasses import dataclass

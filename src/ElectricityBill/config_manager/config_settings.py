@@ -2,6 +2,7 @@
 from pathlib import Path
 import os
 import sys
+
 from dotenv import load_dotenv
 from src.ElectricityBill.exception import CustomException
 from src.ElectricityBill.logger import logger
@@ -12,14 +13,12 @@ from src.ElectricityBill.config_entity.config_params import DataIngestionConfig
 # Load the environment variables
 load_dotenv()
 
-
 class ConfigurationManager:
     def __init__(self, 
                  data_ingestion_config: Path = DATA_INGESTION_CONFIG_FILEPATH,
                  data_validation_config: Path = DATA_VALIDATION_CONFIG_FILEPATH,
                  schema_config: Path = SCHEMA_CONFIG_FILEPATH,
 
-    
     ):
         
         try:
@@ -30,7 +29,6 @@ class ConfigurationManager:
 
             create_directories([self.ingestion_config['artifacts_root']])
             create_directories([self.data_val_config.artifacts_root])
-
 
 
             logger.info("Configuration directories created successfully.")

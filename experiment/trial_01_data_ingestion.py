@@ -1,16 +1,15 @@
 
 import sys
-sys.path.append('/home/western/DS_Projects/electricity-bills')
+sys.path.append('/home/western/ds_projects/electricity-bills')
 
 from dataclasses import dataclass
 from pathlib import Path
-import motor.motor_asyncio  
+import pymongo  # Use the synchronous pymongo driver
 import pandas as pd
 import numpy as np
 import os
 import json
 import time
-import asyncio  
 from datetime import datetime
 from dotenv import load_dotenv
 from src.ElectricityBill.exception import CustomException
@@ -63,18 +62,21 @@ class MongoDBConnection:
         self.uri = uri
         self.db_name = db_name
         self.collection_name = collection_name
+        self.client = None  # Initialize client to None
+        self.db = None
+        self.collection = None
 
-
-    async def __aenter__(self):
-        self.client = motor.motor_asyncio.AsyncIOMotorClient(self.uri)
+    def __enter__(self):
+        self.client = pymongo.MongoClient(self.uri)
         self.db = self.client[self.db_name]
         self.collection = self.db[self.collection_name]
-        logger.info("Connected to MongoDB Database asynchronously")
+        logger.info("Connected to MongoDB Database synchronously")
         return self.collection
-    
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
-        self.client.close()
-        logger.info("MongoDB connection closed.")
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.client:  # Check if client exists before closing
+            self.client.close()
+            logger.info("MongoDB connection closed.")
 
 class DataIngestion:
     def __init__(self, config: DataIngestionConfig, user_name: str):
@@ -86,36 +88,40 @@ class DataIngestion:
             config.config_data['collection_name']
         )
 
-    async def import_data_from_mongodb(self):
+    def import_data_from_mongodb(self):
         start_time = time.time()
         start_timestamp = datetime.now()
         try:
             logger.info("Starting data ingestion...")
-            async with self.mongo_connection as collection:
-                all_data = await self._fetch_all_data(collection)
+            with self.mongo_connection as collection:
+                all_data = self._fetch_all_data(collection)
                 if all_data.empty:
                     logger.warning("No data found in MongoDB.")
                     return
                 cleaned_data = self._clean_data(all_data)
-                output_path = await self._save_data(cleaned_data)
-                await self._save_metadata(start_time, start_timestamp, len(cleaned_data), output_path)
+                output_path = self._save_data(cleaned_data)
+                self._save_metadata(start_time, start_timestamp, len(cleaned_data), output_path)
                 logger.info("Data ingestion completed successfully.")
         except Exception as e:
             logger.error(f"Error during data ingestion: {e}")
             raise CustomException(e)
 
-    async def _fetch_all_data(self, collection) -> pd.DataFrame:
+
+    def _fetch_all_data(self, collection) -> pd.DataFrame:
         try:
-            logger.info("Fetching data from MongoDB asynchronously...")
-            batch_size = self.config.config_data.get('batch_size', 10000)
+            logger.info("Fetching data from MongoDB synchronously...")
+            #batch_size = self.config.config_data.get('batch_size', 10000) #no longer used
             combined_df = pd.DataFrame()
             cursor = collection.find({}, {'_id': 0})
-            async for batch in cursor.batch_size(batch_size):
-                batch_df = pd.DataFrame([batch])
+            
+            # Iterate through all documents in the cursor
+            for batch in cursor:
+                batch_df = pd.DataFrame([batch])  # Wrap the single document in a list
                 combined_df = pd.concat([combined_df, batch_df], ignore_index=True)
+            
             return combined_df if not combined_df.empty else pd.DataFrame()
         except Exception as e:
-            logger.error(f"Error fetching data asynchronously: {e}")
+            logger.error(f"Error fetching data synchronously: {e}")
             raise CustomException(e)
         
     def _clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -137,7 +143,7 @@ class DataIngestion:
             logger.error(f"Error during data cleaning: {e}")
             raise CustomException(e)
 
-    async def _save_data(self, df: pd.DataFrame) -> Path:
+    def _save_data(self, df: pd.DataFrame) -> Path:
         try:
             root_dir = self.config.config_data['root_dir']
             output_path = Path(root_dir) / "electricity_data.parquet"
@@ -148,7 +154,7 @@ class DataIngestion:
             logger.error(f"Error saving data: {e}")
             raise CustomException(e)
     
-    async def _save_metadata(self, start_time: float, start_timestamp: datetime, total_records: int, output_path: Path):
+    def _save_metadata(self, start_time: float, start_timestamp: datetime, total_records: int, output_path: Path):
         try:
             root_dir = self.config.config_data['root_dir']
             metadata = {
@@ -177,11 +183,8 @@ if __name__ == "__main__":
         data_ingestion_config = config_manager.get_data_ingestion_config()
         user_name = config_manager.get_user_name()
         data_ingestion = DataIngestion(config=data_ingestion_config, user_name=user_name)
-        asyncio.run(data_ingestion.import_data_from_mongodb())  # Updated to run async function
+        data_ingestion.import_data_from_mongodb()
         logger.info("Data ingestion process completed successfully.")
     except CustomException as e:
         logger.error(f"Error during data ingestion: {e}")
         logger.info("Data ingestion process failed.")
-
-
-

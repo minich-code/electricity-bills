@@ -1,5 +1,6 @@
 import sys
-sys.path.append('/home/western/DS_Projects/electricity-bills')
+sys.path.append('/home/western/ds_projects/electricity-bills')
+
 
 import pandas as pd
 import joblib

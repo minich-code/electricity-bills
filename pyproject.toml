@@ -14,7 +14,6 @@ authors = [
 ]
 keywords = ["electricity price", "machine-learning", "prediction price"]
 
-# Dependencies should be here under [project], not as a separate section
 dependencies = [
     "ensure",
     "flask",
@@ -26,6 +25,7 @@ dependencies = [
     "pymongo",
     "pyYAML",
     "scikit-learn",
+    "python-json-logger",
     "seaborn",
     "streamlit",
     "types-PyYAML",
@@ -41,6 +41,7 @@ dependencies = [
     "fastapi"
 ]
 
+
 [project.optional-dependencies]
 dev = [
     "flake8",
@@ -50,11 +51,13 @@ dev = [
 [project.scripts]
 electricity_bills = "electricity_bills.main:main"
 
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["src"]  # Important for finding packages
+
 
 [tool.mypy]
 plugins = [

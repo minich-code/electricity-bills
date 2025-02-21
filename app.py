@@ -1,11 +1,11 @@
 import sys
-sys.path.append('/home/western/DS_Projects/electricity-bills')
+sys.path.append('/home/western/ds_projects/electricity-bills')
 
 from flask import Flask, request, render_template
 import os
 import pandas as pd
 import sys
-
+import numpy as np
 
 from src.ElectricityBill.pipelines.pip_07_prediction_pipeline import *
 from src.ElectricityBill.exception import CustomException
@@ -24,7 +24,7 @@ class CustomData:
     def __init__(self,
                  Fan: str, Refrigerator: float, AirConditioner: float, Television: float,
                  Month: str, MonthlyHours: str, TariffRate: str, TotalApplianceHours: str,
-                 City: str, Company: str, Season: str, UsageCategory: str):
+                 City: str, Company: str):
 
         # Corrected attributes names to match form fields
 
@@ -38,25 +38,47 @@ class CustomData:
         self.TotalApplianceHours = TotalApplianceHours
         self.City = City
         self.Company = Company
-        self.Season = Season
-        self.UsageCategory = UsageCategory
+
+    def get_season(self, month: int) -> str:
+        """Determines the season based on the month."""
+        if month in [3, 4, 5]:
+            return "Summer"
+        elif month in [6, 7, 8, 9]:
+            return "Monsoon"
+        else:
+            return "Winter"
+
+    def get_usage_category(self, monthly_hours: float) -> str:
+        """Determines the usage category based on monthly hours."""
+        if 650 <= monthly_hours <= 1000:
+            return "High"
+        elif 400 <= monthly_hours <= 649:
+            return "Medium"
+        else:
+            return "Low"
 
     def get_data_as_df(self) -> pd.DataFrame:
         try:
             # Transform input to dataframe
+            month = int(self.Month)  # Convert Month to integer
+            monthly_hours = float(self.MonthlyHours) #Convert MonthlyHours to float
+
+            season = self.get_season(month)
+            usage_category = self.get_usage_category(monthly_hours)
+
             data = {
                 'Fan': [self.Fan],
                 'Refrigerator': [self.Refrigerator],
                 'AirConditioner': [self.AirConditioner],
                 'Television': [self.Television],
-                'Month': [self.Month],
-                'MonthlyHours': [self.MonthlyHours],
+                'Month': [month],
+                'MonthlyHours': [monthly_hours],
                 'TariffRate': [self.TariffRate],
                 'TotalApplianceHours': [self.TotalApplianceHours],
                 'City': [self.City],
                 'Company': [self.Company],
-                'Season': [self.Season],
-                'UsageCategory': [self.UsageCategory]
+                'season': [season],  # Include calculated Season
+                'UsageCategory': [usage_category]  # Include calculated UsageCategory
             }
             df = pd.DataFrame(data)
 
@@ -69,7 +91,7 @@ class CustomData:
 # Route to homepage
 @app.route('/')  # Added the route decorator to the homepage function
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 # Route to prediction
 @app.route('/predict', methods=['GET', 'POST'])
@@ -91,8 +113,6 @@ def predict_date_point():
                 'TotalApplianceHours': request.form['TotalApplianceHours'],
                 'City': request.form['City'],
                 'Company': request.form['Company'],
-                'Season': request.form['Season'],
-                'UsageCategory': request.form['UsageCategory']
             }
 
             # Create CustomData object
@@ -100,6 +120,8 @@ def predict_date_point():
 
             # Transform to dataframe
             pred_df = custom_data.get_data_as_df()
+
+            print("Columns in pred_df:", pred_df.columns)  # Add this line
 
             # Load the configuration and create a prediction pipeline
             config_manager = ConfigurationManager()
@@ -109,7 +131,7 @@ def predict_date_point():
             # Perform prediction
             prediction = prediction_pipeline.make_predictions(pred_df)
 
-            logger.info(f"Prediction: {prediction}")
+            #logger.info(f"Prediction: {prediction}")
 
 
             # Return prediction
@@ -118,7 +140,7 @@ def predict_date_point():
         except Exception as e:
             # Log the full exception for detailed debugging
             logger.exception(f"Model prediction failed: {str(e)}")
-            return render_template('index.html', error_message=f"Model prediction failed. {str(e)}. Please provide correct values.")
+            return render_template('home.html', error_message=f"Model prediction failed. {str(e)}. Please provide correct values.")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(host="0.0.0.0", port=8081)
