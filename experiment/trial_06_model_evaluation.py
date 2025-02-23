@@ -7,10 +7,8 @@ from typing import Tuple
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import pandas as pd
 import numpy as np
-import json
 import joblib
 import wandb
-
 from src.ElectricityBill.exception import CustomException
 from src.ElectricityBill.logger import logger
 from src.ElectricityBill.constants import *

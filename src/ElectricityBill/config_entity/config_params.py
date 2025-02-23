@@ -9,18 +9,23 @@ from typing import Dict, List, Any
 # Data ingestion configuration
 @dataclass
 class DataIngestionConfig:
-    config_data: dict
+    root_dir: str
+    database_name: str
+    collection_name: str
+    batch_size: int
+    mongo_uri: str
 
 
 # Data validation 
 @dataclass
 class DataValidationConfig:
-    root_dir: Path
+    root_dir: str
+    data_dir: str
     val_status: str
-    data_dir: Path
-    all_schema: Dict[str, Any]
-    critical_columns: List[str]
-    profile_report_path: str  # Add path for the profile report
+    all_schema: dict
+    validated_data: str
+    profile_report_name: str
+
 
 # Data Transformation
 @dataclass

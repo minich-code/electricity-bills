@@ -27,20 +27,20 @@ class DataValidationConfig:
 
 
 class ConfigurationManager:
-    def __init__(self, config_filepath: Path = DATA_VALIDATION_CONFIG_FILEPATH):
+    def __init__(self, data_validation_config: Path = DATA_VALIDATION_CONFIG_FILEPATH):
         try:
-            self.config = read_yaml(config_filepath)
-            create_directories([self.config['artifacts_root']])
+            self.data_val_config = read_yaml(data_validation_config)
+            create_directories([self.data_val_config['artifacts_root']])
         except Exception as e:
             logger.exception(f"Error initializing ConfigurationManager: {e}")
             raise CustomException(e, sys)
 
     def get_data_validation_config(self) -> DataValidationConfig:
         try:
-            config = self.config['data_validation']
-            create_directories([config['root_dir']])
-
-            schema_path = Path(config['all_schema'])
+            data_validation = self.data_val_config['data_validation']
+            create_directories([data_validation['root_dir']])
+            schema_path = Path(data_validation['all_schema'])
+            
             try:
                 all_schema = read_yaml(schema_path)
             except Exception as e:
@@ -48,12 +48,12 @@ class ConfigurationManager:
                 raise CustomException(f"Error reading schema file: {e}", sys)
 
             data_validation_config = DataValidationConfig(
-                root_dir=config['root_dir'],
-                data_dir=config['data_dir'],
-                val_status=config['val_status'],
+                root_dir=data_validation['root_dir'],
+                data_dir=data_validation['data_dir'],
+                val_status=data_validation['val_status'],
                 all_schema=all_schema,
-                validated_data=config['validated_data'],
-                profile_report_name=config.get('profile_report_name', "data_profile.html"),
+                validated_data=data_validation['validated_data'],
+                profile_report_name=data_validation.get('profile_report_name', "data_profile.html"),
             )
             return data_validation_config
         except Exception as e:
