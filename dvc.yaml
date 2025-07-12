@@ -1,0 +1,11 @@
+stages:
+  data_ingestion:
+      cmd: python src/ElectricityBill/pipelines/pip_01_data_ingestion.py
+
+      deps: 
+        - src/ElectricityBill/pipelines/pip_01_data_ingestion.py
+        - config/data-ingestion.yaml
+      outs:
+        - artifacts/data_ingestion/data-ingestion-metadata.json
+        - artifacts/data_ingestion/electricity_data.parquet
+

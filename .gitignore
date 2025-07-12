@@ -183,3 +183,4 @@ logs/
 notebook/data_loader.ipynb
 notebook/.ipynb_checkpoints/data_loader-checkpoint.ipynb
 wandb/
+.qodo

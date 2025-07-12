@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/ElectricityBill/pipelines/pip_01_data_ingestion.py
+    deps:
+    - path: config/data-ingestion.yaml
+      hash: md5
+      md5: 13c696833cf7f97222c31ff71461d9e7
+      size: 211
+    - path: src/ElectricityBill/pipelines/pip_01_data_ingestion.py
+      hash: md5
+      md5: 71d5597fddb989d99e8855df916893d4
+      size: 2793
+    outs:
+    - path: artifacts/data_ingestion/data-ingestion-metadata.json
+      hash: md5
+      md5: c462eb141664a1005e73be25a30ea2aa
+      size: 279
+    - path: artifacts/data_ingestion/electricity_data.parquet
+      hash: md5
+      md5: e301c04687beb784d4c70f9f67633293
+      size: 327665

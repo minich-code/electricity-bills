@@ -17,7 +17,7 @@ class ConfigurationManager:
     def __init__(self, 
                 data_ingestion_config: str = DATA_INGESTION_CONFIG_FILEPATH,
                 config_filepath: Path = DATA_VALIDATION_CONFIG_FILEPATH,
-                #  schema_config: Path = SCHEMA_CONFIG_FILEPATH,
+                schema_config: Path = SCHEMA_CONFIG_FILEPATH,
 
     ):
         
@@ -26,10 +26,8 @@ class ConfigurationManager:
             self.config = read_yaml(config_filepath)
             # self.schema = read_yaml(schema_config) 
 
-
             create_directories([self.ingestion_config['artifacts_root']])
             #create_directories([self.data_val_config.artifacts_root])
-
 
             logger.info("Configuration directories created successfully.")
 
